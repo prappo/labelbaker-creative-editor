@@ -95,7 +95,7 @@ import {
   RectangleGroupIcon
 } from "@heroicons/vue/24/outline";
 
-const Tooltip = defineAsyncComponent(() => import("./Tooltip/index.vue"));
+const Tooltip = defineAsyncComponent(() => import("./Tooltip/Index.vue"));
 import { canvasContainer } from "../store/editor";
 export default {
   props: ["editor"],
