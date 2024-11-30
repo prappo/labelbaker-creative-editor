@@ -7,7 +7,7 @@
 
 <img src="public/Poster.png" />
 
-## Uses
+## Use
 ```shell
 npm install
 npm run dev
