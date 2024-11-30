@@ -51,7 +51,7 @@ app.config.warnHandler = function (msg, vm, trace) {
 // app.config.compilerOptions.isCustomElement = tag => tag.startsWith('svg:');
 
 app.config.globalProperties.toast = toast;
-app.config.globalProperties.apiEndpoint = '';
+app.config.globalProperties.apiEndpoint = 'https://cdn.jsdelivr.net/gh/prappo/label-template-api@1.1.1/public';
 // app.config.globalProperties.apiEndpoint = '';
 // app.config.globalProperties.apiEndpoint =
 //   "https://raw.githubusercontent.com/prappo/label-template-api/main/public";

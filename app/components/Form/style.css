@@ -1,0 +1,71 @@
+  body {
+      overflow: hidden;
+  }
+
+  .gjs-pn-panel {
+      position: relative;
+  }
+
+  .gjs-pn-panel.gjs-pn-views,
+  .gjs-pn-panel.gjs-pn-views-container {
+      width: 100%;
+  }
+
+  .gjs-pn-panel.gjs-pn-options {
+      right: 0;
+  }
+
+  .gjs-pn-panels {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+  }
+
+  .row {
+      display: flex;
+      justify-content: flex-start;
+      align-items: stretch;
+      flex-wrap: nowrap;
+  }
+
+  .column {
+      min-height: 75px;
+      flex-grow: 1;
+      flex-basis: 100%;
+      overflow: auto;
+  }
+
+  .editor-clm {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .gjs-cv-canvas {
+      width: 100%;
+      height: 100%;
+      top: 0;
+  }
+
+  /* .gjs-blocks-cs {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-top: none;
+  } */
+
+  /* Theming */
+  .gjs-one-bg {
+      background-color: #242a3b;
+  }
+
+  .gjs-two-color {
+      color: #9ca8bb;
+  }
+
+  .gjs-three-bg {
+      background-color: #3F82F8;
+      color: white;
+  }
+
+  .gjs-four-color,
+  .gjs-four-color-h:hover {
+      color: #3F82F8;
+  }

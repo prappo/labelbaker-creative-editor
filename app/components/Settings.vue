@@ -1,6 +1,6 @@
 <template>
   <div class="px-4 flex z-40 justify-center gap-20  items-center w-full bg-transparent sticky top-0">
-    <div v-if="TempData.editing.name" class="w-full flex items-center h-full">
+    <!-- <div v-if="TempData.editing.name" class="w-full flex items-center h-full">
       <div class="bg-gray-200 dark:bg-gray-900 pl-2 pr-1 py-1 flex items-center justify-between gap-1 rounded-full">
        
        {{ TempData.editing.name }} <div class="flex gap-2" v-if="TempData.templateType">
@@ -9,7 +9,7 @@
         </div>
       </div>
       </div>
-    </div>
+    </div> -->
     <div class="
         flex
         bg-white

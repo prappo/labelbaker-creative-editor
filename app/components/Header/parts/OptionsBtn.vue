@@ -27,7 +27,7 @@
           </MenuItem>
         </div>
         <div>
-          <MenuItem v-slot="{ active }">
+          <!-- <MenuItem v-slot="{ active }">
           <div @click="save()" class="flex cursor-pointer gap-2 justify-between items-center" :class="[
             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
             'block px-4 py-2 text-sm',
@@ -35,13 +35,13 @@
             <InboxArrowDownIcon class="h-5 w-5" />
             <div class="flex-grow">{{ $t("option.save") }}</div>
 
-            <!-- <kbd
+            <kbd
                 class="md:inline-flex hidden items-center rounded-md p-1 text-sm font-sans bg-white font-medium text-slate-400"
               >
                 ⌘S
-              </kbd> -->
+              </kbd>
           </div>
-          </MenuItem>
+          </MenuItem> -->
           <!-- <MenuItem v-slot="{ active }">
             <div
               @click="saveAsTemplateFile()"
@@ -77,21 +77,21 @@
             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
             'block px-4 py-2 text-sm',
           ]">
-            <RocketLaunchIcon class="h-5 w-5" />
+            <InboxArrowDownIcon class="h-5 w-5" />
             Export As
           </div>
           </MenuItem>
         </div>
         <div>
-          <!-- <MenuItem v-slot="{ active }">
+          <MenuItem v-slot="{ active }">
           <div @click="downloadAsTemplate" class="flex cursor-pointer gap-2" :class="[
             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
             'block px-4 py-2 text-sm',
           ]">
-            <CloudArrowDownIcon class="h-5 w-5" />
+             <InboxArrowDownIcon class="h-5 w-5" />
             {{ $t("option.export") }}
           </div>
-          </MenuItem> -->
+          </MenuItem>
           <MenuItem v-slot="{ active }">
           <div @click="importFile(canvasContainer.editor)" class="flex cursor-pointer gap-2" :class="[
             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -116,7 +116,7 @@
             </a>
           </MenuItem> -->
         </div>
-        <!-- <div class="py-1">
+         <div class="py-1">
           <MenuItem v-slot="{ active }">
           <div @click="downloadAsImage" class="flex cursor-pointer gap-2" :class="[
             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -126,7 +126,7 @@
             {{ $t("option.downloadAsImage") }}
           </div>
           </MenuItem>
-        </div> -->
+        </div> 
 
         <div class="py-1">
           <MenuItem v-slot="{ active }">
@@ -140,7 +140,7 @@
           </MenuItem>
         </div>
 
-        <div class="py-1">
+        <!-- <div class="py-1">
           <MenuItem v-slot="{ active }">
           <div @click="goHome" class="flex cursor-pointer gap-2" :class="[
             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -150,9 +150,9 @@
             Back to Home
           </div>
           </MenuItem>
-        </div>
+        </div> -->
 
-        <!-- <div class="py-1">
+        <div class="py-1">
           <MenuItem v-slot="{ active }">
           <div class="flex cursor-pointer gap-2" :class="[
             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -161,9 +161,9 @@
             <PrintBtnVue class="w-full" />
           </div>
           </MenuItem>
-        </div> -->
+        </div> 
 
-        <!-- <div class="py-1">
+         <div class="py-1">
           <MenuItem v-slot="{ active }">
           <div @click="stats.showConverterModal = true"  class="flex cursor-pointer gap-2" :class="[
             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -172,7 +172,7 @@
             <CalculatorIcon class="h-5 w-5" />{{ $t("option.unitConverter") }}
           </div>
           </MenuItem>
-        </div> -->
+        </div>
         <!-- <div class="py-1">
           <MenuItem v-slot="{ active }">
             <a
@@ -187,7 +187,7 @@
               <TrashIcon class="h-5 w-5" />{{ $t("option.deleteSavedData") }}
             </a>
           </MenuItem>
-        </div> -->
+        </div>  -->
       </MenuItems>
     </transition>
   </Menu>
@@ -281,9 +281,9 @@ export default {
         });
     },
     newDesign() {
-      // this.stats.newTemplateModal = true;
+      this.stats.newTemplateModal = true;
       // this.stats.showChooseNewTemplateModal = true;
-      this.stats.showNewModal = true
+      // this.stats.showNewModal = true
     },
     deleteSavedData() {
       localStorage.removeItem("editorData");

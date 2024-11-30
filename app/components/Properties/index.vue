@@ -394,40 +394,45 @@ export default {
   },
 
   mounted() {
-    TempData.templateType = 'label';
-    setTimeout(() => {
+    TempData.templateType = 'app';
+    this.tabsVisibility.magic = true;
+    this.tabsVisibility.developer = true;
+    this.tabsVisibility.printSettings = false;
+    this.tabsVisibility.docSettings = false;
+    
+    // setTimeout(() => {
     
 
-      if (TempData.templateType) {
-        if (TempData.templateType.includes("banner")) {
-          this.tabsVisibility.magic = false;
-          this.tabsVisibility.developer = false;
-          this.tabsVisibility.printSettings = false;
-          this.tabsVisibility.docSettings = false;
-        }
+    //   if (TempData.templateType) {
+    //     if (TempData.templateType.includes("banner")) {
+    //       this.tabsVisibility.magic = false;
+    //       this.tabsVisibility.developer = false;
+    //       this.tabsVisibility.printSettings = false;
+    //       this.tabsVisibility.docSettings = false;
+    //     }
 
-        if (TempData.templateType.includes("popup")) {
-          this.tabsVisibility.magic = true;
-          this.tabsVisibility.developer = true;
-          this.tabsVisibility.printSettings = false;
-          this.tabsVisibility.docSettings = false;
-        }
+    //     if (TempData.templateType.includes("popup")) {
+    //       this.tabsVisibility.magic = true;
+    //       this.tabsVisibility.developer = true;
+    //       this.tabsVisibility.printSettings = false;
+    //       this.tabsVisibility.docSettings = false;
+    //     }
 
-        if (TempData.templateType.includes("app")) {
-          this.tabsVisibility.magic = true;
-          this.tabsVisibility.developer = true;
-          this.tabsVisibility.printSettings = false;
-          this.tabsVisibility.docSettings = false;
-        }
+    //     if (TempData.templateType.includes("app")) {
+    //       this.tabsVisibility.magic = true;
+    //       this.tabsVisibility.developer = true;
+    //       this.tabsVisibility.printSettings = false;
+    //       this.tabsVisibility.docSettings = false;
+    //     }
 
-        if (TempData.templateType.includes("label")) {
-          this.tabsVisibility.magic = false;
-          this.tabsVisibility.developer = false;
-          this.tabsVisibility.printSettings = true;
-          this.tabsVisibility.docSettings = true;
-        }
-      }
-    }, 1000);
+    //     if (TempData.templateType.includes("label")) {
+    //       this.tabsVisibility.magic = false;
+    //       this.tabsVisibility.developer = false;
+    //       this.tabsVisibility.printSettings = true;
+    //       this.tabsVisibility.docSettings = true;
+    //     }
+    //   }
+    // }, 1000);
 
     document.addEventListener("editor_selected_element", (e) => {
       if (e.data) {
