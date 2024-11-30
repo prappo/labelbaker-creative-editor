@@ -1,0 +1,62 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 448 448" enable-background="new 0 0 448 448" xml:space="preserve">
+<g>
+	<path fill="#9CA3AF" d="M288,0v160h160V0H288z M416,128h-96V32h96V128z"/>
+	<rect x="64" y="64" fill="#9CA3AF" width="32" height="32"/>
+	<rect x="352" y="64" fill="#9CA3AF" width="32" height="32"/>
+	<polygon fill="#9CA3AF" points="256,64 224,64 224,32 256,32 256,0 192,0 192,96 224,96 224,128 256,128 	"/>
+	<path fill="#9CA3AF" d="M160,160V0H0v160h32H160z M32,32h96v96H32V32z"/>
+	<polygon fill="#9CA3AF" points="0,192 0,256 32,256 32,224 64,224 64,192 	"/>
+	<polygon fill="#9CA3AF" points="224,224 256,224 256,160 224,160 224,128 192,128 192,192 224,192 	"/>
+	<rect x="352" y="192" fill="#9CA3AF" width="32" height="32"/>
+	<rect x="416" y="192" fill="#9CA3AF" width="32" height="32"/>
+	<polygon fill="#9CA3AF" points="320,256 320,288 352,288 352,320 384,320 384,256 352,256 352,224 320,224 320,192 288,192 
+		288,224 256,224 256,256 	"/>
+	<rect x="384" y="224" fill="#9CA3AF" width="32" height="32"/>
+	<path fill="#9CA3AF" d="M0,288v160h160V288H0z M128,416H32v-96h96V416z"/>
+	<polygon fill="#9CA3AF" points="256,256 224,256 224,224 192,224 192,192 96,192 96,224 64,224 64,256 128,256 128,224 160,224 
+		160,256 192,256 192,288 224,288 224,320 256,320 	"/>
+	<rect x="288" y="288" fill="#9CA3AF" width="32" height="32"/>
+	<rect x="416" y="256" fill="#9CA3AF" width="32" height="64"/>
+	<rect x="320" y="320" fill="#9CA3AF" width="32" height="32"/>
+	<rect x="384" y="320" fill="#9CA3AF" width="32" height="32"/>
+	<rect x="64" y="352" fill="#9CA3AF" width="32" height="32"/>
+	<polygon fill="#9CA3AF" points="320,384 320,352 288,352 288,320 256,320 256,352 224,352 224,320 192,320 192,384 224,384 
+		224,416 256,416 256,384 	"/>
+	<polygon fill="#9CA3AF" points="352,384 320,384 320,416 352,416 352,448 384,448 384,352 352,352 	"/>
+	<rect x="416" y="352" fill="#9CA3AF" width="32" height="32"/>
+	<rect x="192" y="416" fill="#9CA3AF" width="32" height="32"/>
+	<rect x="256" y="416" fill="#9CA3AF" width="64" height="32"/>
+	<rect x="416" y="416" fill="#9CA3AF" width="32" height="32"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>

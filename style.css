@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.pl-8 {
+  padding-left: 2rem !important;
+}
+
+.pl-6 {
+  padding-left: 1.5rem !important;
+}
+
+.pl-10 {
+  padding-left: 2.5rem !important;
+}
+
+#stage-parent {
+  /* background-color: white; */
+  width: 100%;
+}
+
+.swiper-slide{
+  background: #eee !important;
+}
+
+.konvajs-content {
+  background-color: white;
+}
+
+
+.label-baker-content{
+  /* background-color: white; */
+}
+
+.Vue-Toastification__toast--success {
+  background-color: #22c55e;
+}
+
+.Vue-Toastification__toast--default {
+  background-color: #3b82f6;
+}
+
+.Vue-Toastification__container{
+ z-index: 99999;
+}
+
+/* Svg style */
+figure svg {
+  width: 100%;
+  height: auto;
+}
+figure svg .page {
+  fill: none;
+}
+figure svg .tiles {
+  fill: none;
+  stroke: #ccc;
+}
+figure svg path {
+  fill: none;
+}
+figure svg .cut path {
+  stroke-width: 1px;
+  stroke: black;
+}
+figure svg .fold {
+  stroke: gray;
+  stroke-dasharray: 2;
+}
+figure svg .valley {
+  stroke: darkcyan;
+}
+figure svg .construction {
+  stroke: silver;
+  stroke-dasharray: 5 5;
+}
+figure svg .mountain {
+  stroke: #666;
+}
+figure svg .registration path {
+  fill: black;
+  stroke: none;
+}
