@@ -13,5 +13,3 @@ npm install
 npm run dev
 npm run build
 ```
-
-### More details coming soon..
