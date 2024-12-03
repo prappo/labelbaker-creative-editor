@@ -21,11 +21,18 @@ import { applyAnimation } from "./libs/animation";
 import ConvertToHTML from "./libs/convert-to-html";
 export class Editor {
   constructor(config) {
+    this.initializeProperties(config);
+    this.setupStage();
+    this.setupLayers();
+    this.setupTransformer();
+    this.setupLibraries();
+  }
+
+  initializeProperties(config) {
     this.templateName = '';
     this.templateId = '';
-
     this.editorHeight = config.height;
-    this.editorWidth = config.width;
+    this.editorWidth = config.width; 
     this.pageWidth = config.pageWidth;
     this.pageHeight = config.pageHeight;
     this.container = config.container;
@@ -33,8 +40,8 @@ export class Editor {
     this.readOnly = config.readOnly;
     this.core = Core;
     this.Konva = Konva;
-    this.elements = []; // list of created elements
-    this.selected = null; // selected object
+    this.elements = [];
+    this.selected = null;
     this.eventName = "editor_element_change";
     this.eventSelected = "editor_selected_element";
     this.changeEvent = new CustomEvent(this.eventName);
@@ -46,36 +53,56 @@ export class Editor {
     this.copiedStyle = null;
     this.defaultConfiguration = configuration;
     this.medias = [];
-
-    // globals
-    window.lableBakerIntervals = [];
-
-    if (this.act === "browser") {
-      this.editor = new Core.Stage({
-        height: this.editorHeight,
-        width: this.editorWidth,
-        container: this.container,
-      });
-    } else {
-      this.editor = new Core.Stage({
-        height: this.editorHeight,
-        width: this.editorWidth,
-      });
-    }
-
-    this.editor.setAttr('type', 'stage')
-
     this.enableGrid = false;
     this.enableRuler = false;
 
-    // Background layer
+    // Clear any existing intervals
+    window.lableBakerIntervals = [];
+  }
 
+  setupStage() {
+    const stageConfig = {
+      height: this.editorHeight,
+      width: this.editorWidth,
+      container: this.act === "browser" ? this.container : undefined
+    };
+
+    this.editor = new Core.Stage(stageConfig);
+    this.editor.setAttr('type', 'stage');
+  }
+
+  setupLayers() {
+    // Background Layer
     this.backgroundLayer = new Core.Layer();
     this.backgroundLayer.name("backgroundLayer");
     this.editor.add(this.backgroundLayer);
 
-    // add background to background layer
+    this.setupBackground();
 
+    // Grid Layer
+    this.gridLayer = new Core.Layer();
+    this.gridLayer.name("gridLayer");
+    this.editor.add(this.gridLayer);
+
+    // Ruler Layer
+    this.rulerLayer = new Core.Layer();
+    this.rulerLayer.name("rulerLayer");
+    this.editor.add(this.rulerLayer);
+
+    // Main Layer
+    this.layer = new Core.Layer();
+    this.layer.name("mainLayer");
+    this.editor.add(this.layer);
+
+    // Hidden Layer
+    this.hiddenLayer = new Core.Layer();
+    this.hiddenLayer.name("hiddenLayer");
+    this.editor.add(this.hiddenLayer);
+
+    this.setupGridAndMarker();
+  }
+
+  setupBackground() {
     this.background = new Konva.Rect({
       x: 0,
       y: 0,
@@ -86,34 +113,14 @@ export class Editor {
       type: "background",
     });
 
-    this.background.on("click tap", () => {
-      this.deselect();
-    });
-
+    this.background.on("click tap", () => this.deselect());
     this.backgroundLayer.add(this.background);
+  }
 
-    // Grid Layer
-    this.gridLayer = new Core.Layer();
-    this.gridLayer.name("gridLayer");
-    this.editor.add(this.gridLayer);
-
-    // Ruler layer
-
-    this.rulerLayer = new Core.Layer();
-    this.rulerLayer.name("rulerLayer");
-    this.editor.add(this.rulerLayer);
-
-    // Main layer
-    this.layer = new Core.Layer();
-    this.layer.name("mainLayer");
-    this.editor.add(this.layer);
-
-    this.hiddenLayer = new Core.Layer();
-    this.hiddenLayer.name("hiddenLayer");
-    this.editor.add(this.hiddenLayer);
-
-    // Add grid
+  setupGridAndMarker() {
     this.grid = new Grid(this);
+    this.grid.addGrid();
+
     this.shadowRectangle = new Konva.Rect({
       x: 0,
       y: 0,
@@ -138,17 +145,9 @@ export class Editor {
     });
 
     this.hiddenLayer.add(this.marker);
+  }
 
-    this.grid.addGrid();
-
-    // Add ruler
-    this.rulerTickSize = 4;
-    this.rulerTickSpacing = 10;
-    this.rulerFontSize = 2;
-    this.rulerFontColor = "#333";
-    this.ruler = new Ruler(this);
-    this.ruler.addRuler();
-
+  setupTransformer() {
     this.transform = new Core.Transformer({
       shouldOverdrawWholeArea: true,
       ignoreStroke: true,
@@ -157,21 +156,13 @@ export class Editor {
     this.transform.name("transform");
     snapping(this.editor, this.layer, this.transform);
     this.layer.add(this.transform);
+  }
 
-    // libs
-    // this.cleanUp(this.editor, this.transform);
-    this.QRCode = QRCode;
-    this.Barcode = JsBarcode;
-    this.Print = Print;
-    this.Sheet = Sheet;
-    this.InputField = InputField;
+  setupLibraries() {
+    // Setup animation
+    this.anim = new Konva.Animation(() => {}, this.layer);
 
-    // anim
-
-    this.anim = new Konva.Animation(function () {
-      // do nothing, animation just need to update the layer
-    }, this.layer);
-
+    // Initialize libraries based on mode
     if (!this.readOnly) {
       this.Features = new Features(this);
       this.Selection = new Selection(this);
@@ -179,12 +170,19 @@ export class Editor {
       this.History = new History(this);
     }
 
+    // Common libraries
     this.Naming = new Naming(this);
     this.ImportData = new DataImport(this);
     this.Printing = new Printing(this);
     this.LayoutMaker = LayoutMaker;
-    this.ConvertToHTML = new ConvertToHTML(this)
-
+    this.ConvertToHTML = new ConvertToHTML(this);
+    
+    // External libraries
+    this.QRCode = QRCode;
+    this.Barcode = JsBarcode;
+    this.Print = Print;
+    this.Sheet = Sheet;
+    this.InputField = InputField;
   }
 
   mark(obj) {
