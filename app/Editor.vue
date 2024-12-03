@@ -238,8 +238,18 @@ export default {
       window.editor = myEditor;
     }
 
-    // Fit editor to container
-    myEditor.fitIntoContainer();
+    // Use nextTick to ensure DOM is fully rendered
+    this.$nextTick(() => {
+      // Initial fit
+      myEditor.fitIntoContainer();
+      
+      // Add small delay as backup to ensure everything is loaded
+      setTimeout(() => {
+        myEditor.fitIntoContainer();
+      }, 1000);
+    });
+
+    // Handle window resize
     window.addEventListener("resize", () => myEditor.fitIntoContainer());
 
     // Initialize keyboard shortcuts
