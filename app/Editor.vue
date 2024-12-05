@@ -218,6 +218,7 @@ export default {
   },
 
   mounted() {
+    this.stats.showChooseNewTemplateModal = true;
     // Initialize editor
     const config = {
       width: parseInt(this.canvasContainer.cellWidth),

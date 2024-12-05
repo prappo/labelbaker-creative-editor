@@ -13,7 +13,7 @@ import { marker } from "./editor-parts/marker";
 import { Circle, Rect, Text, Line } from "./tools";
 import snapping from "./libs/snapping";
 import Core from "./init";
-import { Print, Sheet } from "./libs";
+import { Print, Sheet, Ruler } from "./libs";
 import QRCode from "qrcode";
 import JsBarcode from "jsbarcode";
 
@@ -24,6 +24,7 @@ export class Editor extends EditorBase {
     this.setupLayers();
     this.setupTransformer();
     this.setupLibraries();
+    this.ruler = new Ruler(this);
   }
 }
 
@@ -39,7 +40,8 @@ Object.assign(Editor.prototype,
   exportMethods,
   style,
   group,
-  marker
+  marker,
+  
 );
 
-export { Core, Print, Sheet, QRCode, JsBarcode as Barcode };
+export { Core, Print, Sheet, Ruler, QRCode, JsBarcode as Barcode };

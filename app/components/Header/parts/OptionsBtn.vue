@@ -281,8 +281,8 @@ export default {
         });
     },
     newDesign() {
-      this.stats.newTemplateModal = true;
-      // this.stats.showChooseNewTemplateModal = true;
+      // this.stats.newTemplateModal = true;
+      this.stats.showChooseNewTemplateModal = true;
       // this.stats.showNewModal = true
     },
     deleteSavedData() {
