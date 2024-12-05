@@ -395,10 +395,7 @@ export default {
 
   mounted() {
     TempData.templateType = 'app';
-    this.tabsVisibility.magic = true;
-    this.tabsVisibility.developer = true;
-    this.tabsVisibility.printSettings = false;
-    this.tabsVisibility.docSettings = false;
+    this.tabsVisibility = this.propertyTabsVisibility;
     
     // setTimeout(() => {
     

@@ -60,7 +60,13 @@ const globalProps = {
   isWooExists: false,
   appMode: 'noAuth',
   defaultAudioUrl: '/music.mp3',
-  
+  propertyTabsVisibility: {
+    properties: true,
+    magic: true,
+    docSettings: true,
+    printSettings: true,
+    developer: false,
+  },
   // Check if pro features are available
   isPro: (isProRequired) => false
 };
@@ -87,7 +93,8 @@ if (typeof labelbaker !== 'undefined') {
     defaultVideoUrl: labelbaker.defaultVideoUrl,
     defaultAudioUrl: labelbaker.defaultAudioUrl,
     licenseEndpoint: labelbaker.licenseEndpoint,
-    isWooExists: labelbaker.isWooExists
+    isWooExists: labelbaker.isWooExists,
+   
   };
 
   // Apply application specific properties
