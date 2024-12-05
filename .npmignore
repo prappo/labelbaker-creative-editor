@@ -1,0 +1,33 @@
+# Source files
+src/
+app/
+public/
+
+# Config files
+.gitignore
+.prettierrc
+.eslintrc
+vite.config.js
+vite.lib.config.js
+tailwind.config.cjs
+
+# Development files
+node_modules/
+.vscode/
+.idea/
+*.log
+*.lock
+.DS_Store
+
+# Test files
+test/
+coverage/
+
+# Documentation and examples
+docs/
+examples/
+README.md
+
+# Build files except dist/lib
+dist/*
+!dist/lib/ 

@@ -6,6 +6,8 @@
 
 <img src="public/Poster.png" />
 
+# Use LabelBaker Creative Editor as a Library
+
 ## Installation
 
 ```shell
