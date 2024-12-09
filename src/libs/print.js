@@ -1,5 +1,5 @@
 // import jsPDF from 'jspdf';
-const { jsPDF } = window.jspdf;
+import { jsPDF } from "jspdf";
 export class Print {
   constructor(config) {
     this.doc = new jsPDF(config.docSize);
