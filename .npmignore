@@ -26,7 +26,6 @@ coverage/
 # Documentation and examples
 docs/
 examples/
-README.md
 
 # Build files except dist/lib
 dist/*
