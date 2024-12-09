@@ -35,6 +35,22 @@
     "visualizer": "npx vite-bundle-visualizer",
     "prepublishOnly": "npm run build:lib"
   },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.2.0",
+    "autoprefixer": "^10.4.13",
+    "concurrently": "^7.6.0",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4",
+    "tailwindcss-rtl": "^0.9.0",
+    "vite": "^3.2.5",
+    "vite-plugin-mkcert": "^1.15.0",
+    "vite-plugin-pwa": "^0.14.1"
+  },
+  "peerDependencies": {
+    "jsbarcode": "^3.11.5",
+    "konva": "^8.0.0",
+    "qrcode": "^1.5.0"
+  },
   "dependencies": {
     "@cloudfour/simple-svg-placeholder": "^1.1.0",
     "@fatal_error/libs_change": "^1.0.0",
@@ -47,28 +63,19 @@
     "fontfaceobserver": "^2.3.0",
     "fuse.js": "^6.6.2",
     "get-svg-colors-browser": "^2.0.7",
+    "highlight.js": "^11.7.0",
     "jsbarcode": "^3.11.5",
     "jspdf": "^2.5.1",
-    "konva": "^8.4.2",
-    "qrcode": "^1.5.1",
+    "konva": "^8.0.0",
+    "qrcode": "^1.5.0",
+    "tabulator-tables": "^5.4.4",
     "vue": "^3.2.47",
     "vue-accessible-color-picker": "^4.1.2",
     "vue-final-modal": "^3.4.11",
-    "vue-flatpickr-component": "^11.0.3",
+    "vue-flatpickr-component": "^11.0.5",
+    "vue-highlight-code": "^0.1.16",
     "vue-i18n": "^9.2.2",
     "vue-toastification": "^2.0.0-rc.5"
-  },
-  "peerDependencies": {
-    "konva": "^8.0.0",
-    "qrcode": "^1.5.0",
-    "jsbarcode": "^3.11.5"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "vite": "^4.0.0",
-    "terser": "^5.0.0",
-    "@types/node": "^18.0.0",
-    "typescript": "^4.9.0"
   },
   "repository": {
     "type": "git",
