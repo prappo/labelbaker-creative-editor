@@ -11,6 +11,7 @@ import LayoutMaker from "../libs/layoutmaker";
 import InputField from "../libs/input-field";
 import ConvertToHTML from "../libs/convert-to-html";
 import { Print, Sheet } from "../libs";
+import { applyAnimation } from "../libs/animation";
 import QRCode from "qrcode";
 import JsBarcode from "jsbarcode";
 
@@ -117,6 +118,10 @@ export class EditorBase {
     };
 
     io.src = image;
+  }
+
+  animation(animationName, el, duration) {
+    applyAnimation(this.editor, this.layer, animationName, el, duration);
   }
 
   add(object) {
