@@ -99,6 +99,26 @@ export class EditorBase {
     this.InputField = InputField;
   }
 
+  updateImage(obj, image, config = {}) {
+    let io = new Image();
+    io.crossOrigin = "Anonymous";
+    io.onload = () => {
+      
+
+      let calculation = this.calculateNewSize(io.width, io.height, obj.width());
+      obj.image(io);
+      obj.width(calculation.width);
+      obj.height(calculation.height);
+
+      if (!this.isEmpty(config)) {
+        obj.setAttrs(config);
+      }
+      obj.setAttr('imageSrc', image)
+    };
+
+    io.src = image;
+  }
+
   add(object) {
     object.on("click tap", () => {
       this.onClick(object);
