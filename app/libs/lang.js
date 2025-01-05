@@ -115,6 +115,7 @@ export default {
         text: 'Text',
         barcodeBasic: 'Barcode',
         image: 'Image',
+        gif:'GIF',
         video:'Video',
         audio:'Audio',
         timer:'Timer',

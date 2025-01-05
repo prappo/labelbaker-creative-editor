@@ -199,11 +199,11 @@ export const shapes = {
       if (this.isEmpty(config)) {
         config = {
           type: "gif",
-          imageSrc: 'https://app.pimpmysnap.com/assets/stickers-previews/pointing/pointing-7.gif',
-          x: this.getXCenter(this.getSize()),
-          y: this.getYCenter(this.getSize()),
-          width: this.getSize(),
-          height: this.getSize(),
+          imageSrc: 'pointing.gif',
+          x: this.getXCenter(this.getSize() / 2),
+          y: this.getYCenter(this.getSize() / 2),
+          width: this.getSize() / 2,
+          height: this.getSize() / 2,
           draggable: true
         };
       }

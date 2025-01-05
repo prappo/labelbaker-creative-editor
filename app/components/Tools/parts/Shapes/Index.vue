@@ -43,6 +43,7 @@ import RectIco from "../../icons/Rect.svg";
 import CircleIco from "../../icons/Circle.svg";
 import LineIco from "../../icons/Line.svg";
 import ImageIco from "../../icons/Image.svg";
+import GifIcon from "../../icons/Gif.svg";
 import BarcodeIco from "../../icons/Barcode.svg";
 import QRcodeeIco from "../../icons/QRcode.svg";
 import TriangleIco from "../../icons/Triangle.svg";
@@ -119,7 +120,7 @@ export default {
         {
           name: "GIF",
           type: "gif",
-          imageSrc: ImageIco,
+          imageSrc: GifIcon,
           action: () => {
             this.editor.addGif({});
           },
