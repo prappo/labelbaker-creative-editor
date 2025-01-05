@@ -187,49 +187,77 @@ export default {
       // document.getElementById('render').appendChild(a);
     },
     render() {
+      if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
+        alert('Your browser does not support WebM video recording');
+        return;
+      }
       this.downloadLink = null;
       this.rendering = true;
       this.applyOnCanvas()
         .then((e) => {
-          const chunks = []; // here we will store our recorded media chunks (Blobs)
+          const chunks = []; 
           const canvas = this.editor.layer.getNativeCanvasElement();
-          const stream = canvas.captureStream(30); // grab our canvas MediaStream
-          const rec = new MediaRecorder(stream); // init the recorder
+          const stream = canvas.captureStream(30);
+          const rec = new MediaRecorder(stream, {
+            mimeType: 'video/webm;codecs=vp8,opus' // Specify codec
+          });
 
-          // audio capture
-
+          // Fix audio handling
           const audioCtx = new AudioContext();
           const dest = audioCtx.createMediaStreamDestination();
-          const aStream = dest.stream;
-          this.editor.medias.forEach(media => {
+          
+          // Only add audio if there are media elements
+          if (this.editor.medias && this.editor.medias.length > 0) {
+            try {
+              this.editor.medias.forEach(media => {
+                if (media && !media.paused) { // Only connect playing media
+                  const sourceNode = audioCtx.createMediaElementSource(media);
+                  sourceNode.connect(dest);
+                  sourceNode.connect(audioCtx.destination); // Allow audio to play while recording
+                }
+              });
+              
+              // Only add audio track if we have audio sources
+              const audioTrack = dest.stream.getAudioTracks()[0];
+              if (audioTrack) {
+                stream.addTrack(audioTrack);
+              }
+            } catch (err) {
+              console.warn('Audio setup failed:', err);
+            }
+          }
 
-
-            var sourceNode = audioCtx.createMediaElementSource(media);
-            sourceNode.connect(dest)
-          })
-
-
-
-          stream.addTrack(aStream.getAudioTracks()[0]);
-          // every time the recorder has new data, we will store it in our array
           rec.ondataavailable = (e) => {
-            chunks.push(e.data);
+            if (e.data && e.data.size > 0) { // Only add non-empty chunks
+              chunks.push(e.data);
+            }
           };
 
-          // only when the recorder stops, we construct a complete Blob from all the chunks
-          rec.onstop = (e) =>
-            this.exportVid(new Blob(chunks, { type: "video/webm" }));
+          rec.onstop = () => {
+            if (chunks.length > 0) {
+              this.exportVid(new Blob(chunks, { type: 'video/webm' }));
+            } else {
+              this.rendering = false;
+              console.error('No data was recorded');
+            }
+          };
 
-          rec.start(0);
+          rec.onerror = (err) => {
+            this.rendering = false;
+            console.error('Recording error:', err);
+          };
+
+          // Start recording
+          rec.start(100); // Record in 100ms chunks
+          
           setTimeout(() => {
             rec.stop();
             this.rendering = false;
-          }, this.duration * 1000); // stop recording in sec
+          }, this.duration * 1000);
         })
         .catch((err) => {
           this.rendering = false;
-          console.log(err);
-
+          console.error('Canvas setup failed:', err);
         });
     },
     closeModal() {
