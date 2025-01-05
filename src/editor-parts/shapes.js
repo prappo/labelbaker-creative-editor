@@ -1,5 +1,6 @@
 import { Text, Circle, Rect, Line } from "../tools";
 import Konva from "konva";
+import  "../vendor/gifler.min.js";
 
 export const shapes = {
   addText(config) {
@@ -198,7 +199,7 @@ export const shapes = {
       if (this.isEmpty(config)) {
         config = {
           type: "gif",
-          imageSrc: this.defaultConfiguration.gifPlaceholder,
+          imageSrc: 'https://app.pimpmysnap.com/assets/stickers-previews/pointing/pointing-7.gif',
           x: this.getXCenter(this.getSize()),
           y: this.getYCenter(this.getSize()),
           width: this.getSize(),
@@ -210,7 +211,7 @@ export const shapes = {
       const canvas = document.createElement('canvas');
       
       // Use gifler to parse and draw gif animation
-      this.gifler(config.imageSrc).frames(canvas, (ctx, frame) => {
+      gifler(config.imageSrc).frames(canvas, (ctx, frame) => {
         canvas.width = frame.width;
         canvas.height = frame.height;
         ctx.drawImage(frame.buffer, 0, 0);

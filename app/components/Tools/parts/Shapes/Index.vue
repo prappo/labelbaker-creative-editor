@@ -116,6 +116,14 @@ export default {
             this.editor.addImage({});
           },
         },
+        {
+          name: "GIF",
+          type: "gif",
+          imageSrc: ImageIco,
+          action: () => {
+            this.editor.addGif({});
+          },
+        },
 
         {
           name: "Video",
@@ -134,7 +142,7 @@ export default {
           type: "audio",
           isPro: false,
           imageSrc: AudioIcon,
-          // madeFor: ['app', 'popup'],
+          madeFor: ['app', 'popup'],
           action: () => {
             
             this.editor.addAudio({}, this.defaultAudioUrl);
