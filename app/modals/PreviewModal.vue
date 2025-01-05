@@ -90,7 +90,7 @@
                       Your video is ready to download
                     </div>
                     <div class=" px-3 py-1 rounded-full flex gap-5 items-center">
-                      <a :href="downloadLink" download="myvideo.webm" v-if="downloadLink"
+                      <a :href="downloadLink" :download="'video.mp4'" v-if="downloadLink"
                         class="px-3 flex gap-2 py-2 text-xs font-medium text-center text-white bg-green-700 rounded-full hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                         <CloudArrowDownIcon class="w-4" />
                         Download Video
@@ -173,51 +173,64 @@ export default {
       this.exportSettings = true;
     },
     exportVid(blob) {
-      // const vid = document.createElement('video');
-      // vid.src = URL.createObjectURL(blob);
-      // vid.controls = true;
+      const filename = 'video.mp4';
       this.downloadLink = URL.createObjectURL(blob);
-      // document.getElementById('render').innerHTML = '<video controls="true" src="' + vid.src + '">';
-      // document.getElementById('render').appendChild(vid);
-      // const a = document.createElement('a');
-      // a.download = 'myvid.webm';
-      // a.href = vid.src;
-      // a.textContent = 'download the video';
-      // a.class = "bg-green-500 text-white px-2 py-1 rounded-full";
-      // document.getElementById('render').appendChild(a);
+      
+      // Update the download link to use .mp4 extension
+      const downloadLink = document.querySelector('a[download="myvideo.webm"]');
+      if (downloadLink) {
+        downloadLink.setAttribute('download', filename);
+      }
     },
     render() {
-      if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
-        alert('Your browser does not support WebM video recording');
+      // Check for MP4 support first
+      const mimeTypes = [
+        'video/mp4;codecs=h264,aac',
+        'video/mp4',
+        'video/webm;codecs=h264,opus',
+        'video/webm;codecs=vp8,opus'
+      ];
+
+      let selectedMimeType = null;
+      for (const mimeType of mimeTypes) {
+        if (MediaRecorder.isTypeSupported(mimeType)) {
+          selectedMimeType = mimeType;
+          break;
+        }
+      }
+
+      if (!selectedMimeType) {
+        alert('Your browser does not support video recording');
         return;
       }
+
       this.downloadLink = null;
       this.rendering = true;
+      
       this.applyOnCanvas()
         .then((e) => {
           const chunks = []; 
           const canvas = this.editor.layer.getNativeCanvasElement();
           const stream = canvas.captureStream(30);
           const rec = new MediaRecorder(stream, {
-            mimeType: 'video/webm;codecs=vp8,opus' // Specify codec
+            mimeType: selectedMimeType,
+            videoBitsPerSecond: 2500000, // 2.5 Mbps
           });
 
-          // Fix audio handling
+          // Audio handling
           const audioCtx = new AudioContext();
           const dest = audioCtx.createMediaStreamDestination();
           
-          // Only add audio if there are media elements
           if (this.editor.medias && this.editor.medias.length > 0) {
             try {
               this.editor.medias.forEach(media => {
-                if (media && !media.paused) { // Only connect playing media
+                if (media && !media.paused) {
                   const sourceNode = audioCtx.createMediaElementSource(media);
                   sourceNode.connect(dest);
-                  sourceNode.connect(audioCtx.destination); // Allow audio to play while recording
+                  sourceNode.connect(audioCtx.destination);
                 }
               });
               
-              // Only add audio track if we have audio sources
               const audioTrack = dest.stream.getAudioTracks()[0];
               if (audioTrack) {
                 stream.addTrack(audioTrack);
@@ -228,14 +241,16 @@ export default {
           }
 
           rec.ondataavailable = (e) => {
-            if (e.data && e.data.size > 0) { // Only add non-empty chunks
+            if (e.data && e.data.size > 0) {
               chunks.push(e.data);
             }
           };
 
           rec.onstop = () => {
             if (chunks.length > 0) {
-              this.exportVid(new Blob(chunks, { type: 'video/webm' }));
+              const blob = new Blob(chunks, { type: selectedMimeType.split(';')[0] });
+              // Change the download filename to .mp4
+              this.exportVid(blob);
             } else {
               this.rendering = false;
               console.error('No data was recorded');
@@ -247,8 +262,7 @@ export default {
             console.error('Recording error:', err);
           };
 
-          // Start recording
-          rec.start(100); // Record in 100ms chunks
+          rec.start(100);
           
           setTimeout(() => {
             rec.stop();
