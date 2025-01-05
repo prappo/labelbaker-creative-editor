@@ -193,6 +193,41 @@ export const shapes = {
     });
   },
 
+  addGif(config) {
+    return new Promise((resolve, reject) => {
+      if (this.isEmpty(config)) {
+        config = {
+          type: "gif",
+          imageSrc: this.defaultConfiguration.gifPlaceholder,
+          x: this.getXCenter(this.getSize()),
+          y: this.getYCenter(this.getSize()),
+          width: this.getSize(),
+          height: this.getSize(),
+          draggable: true
+        };
+      }
+
+      const canvas = document.createElement('canvas');
+      
+      // Use gifler to parse and draw gif animation
+      this.gifler(config.imageSrc).frames(canvas, (ctx, frame) => {
+        canvas.width = frame.width;
+        canvas.height = frame.height;
+        ctx.drawImage(frame.buffer, 0, 0);
+        this.layer.draw();
+      });
+
+      // Create Konva image with the canvas
+      const image = new this.core.Image({
+        ...config,
+        image: canvas
+      });
+      
+      this.add(image);
+      resolve(image);
+    });
+  },
+
   addPath(config) {
     if (this.isEmpty(config)) {
       config = {

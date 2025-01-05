@@ -18,7 +18,7 @@
 
           <button v-if="store.activeMenu === 'designer' && AppSettings.enablePreview" @click="stats.showPreviewModal = true" type="button" class="text-white flex gap-1 items-center bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-3 py-1 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
             <PlayIcon class="w-5" />
-            Preview
+            Export
             <kbd class="
                     md:inline-flex
                     hidden

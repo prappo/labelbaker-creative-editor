@@ -122,7 +122,7 @@ export default {
           isPro: false,
           type: "video",
           imageSrc: VideoIcon,
-          madeFor: ['app', 'popup'],
+          // madeFor: ['app', 'popup'],
           action: () => {
             
             this.editor.addVideo({});
@@ -134,7 +134,7 @@ export default {
           type: "audio",
           isPro: false,
           imageSrc: AudioIcon,
-          madeFor: ['app', 'popup'],
+          // madeFor: ['app', 'popup'],
           action: () => {
             
             this.editor.addAudio({}, this.defaultAudioUrl);
