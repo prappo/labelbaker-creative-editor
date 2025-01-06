@@ -25,6 +25,7 @@
     <ShareModal :key="Date.now()" v-if="stats.showShareModal" />
     <DeleteModal :key="Date.now()" v-if="stats.showDeleteModal" />
     <SendMail :key="Date.now()" v-if="stats.showSendEmailModal" />
+    <GifSelection :key="Date.now()" v-if="stats.showGifModal" />
   </div>
 </template>
 
@@ -70,6 +71,8 @@ const FeaturedModal = defineAsyncComponent(() =>
 const ProductModal = defineAsyncComponent(() =>
   import("./Editor/ProductImage.vue")
 );
+const GifSelection = defineAsyncComponent(() => import("./Editor/GifSelection.vue"));
+
 const ShortcodeModal = defineAsyncComponent(() => import("./Shortcode.vue"));
 const ScriptInstaller = defineAsyncComponent(() =>
   import("./ScriptInstaller.vue")
@@ -106,6 +109,7 @@ export default {
     FeaturedModal,
     ProductModal,
     WidgetModal,
+    GifSelection,
     ShortcodeModal,
     ScriptInstaller,
     EditName,

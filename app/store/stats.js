@@ -32,5 +32,5 @@ export const stats = reactive({
     showShareModal:false,
     showDeleteModal:false,
     showSendEmailModal:false,
-    
+    showGifModal:false,
 })

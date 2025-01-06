@@ -196,10 +196,12 @@ export const shapes = {
 
   addGif(config) {
     return new Promise((resolve, reject) => {
+     
+      
       if (this.isEmpty(config)) {
         config = {
           type: "gif",
-          imageSrc: 'pointing.gif',
+          imageSrc: 'gifs/pointing/pointing.gif',
           x: this.getXCenter(this.getSize() / 2),
           y: this.getYCenter(this.getSize() / 2),
           width: this.getSize() / 2,

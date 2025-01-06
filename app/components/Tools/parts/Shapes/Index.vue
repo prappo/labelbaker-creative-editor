@@ -58,6 +58,7 @@ import AudioIcon from "../../icons/Audio.svg";
 import { StarIcon as SIcon } from "@heroicons/vue/24/solid";
 import IsPro from "../../../Tags/IsPro.vue";
 import { TempData } from "../../../../store/temp";
+import { stats } from "../../../../store/stats";
 export default {
   props: ["editor"],
   components: { SIcon, IsPro },
@@ -66,6 +67,7 @@ export default {
       name: "somename",
       searchItem: "",
       TempData,
+      stats,
       tools: [
         {
           name: "Text",
@@ -122,7 +124,7 @@ export default {
           type: "gif",
           imageSrc: GifIcon,
           action: () => {
-            this.editor.addGif({});
+            this.stats.showGifModal = true;
           },
         },
 
