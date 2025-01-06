@@ -63,6 +63,20 @@ export class EditorBase {
     this.editor.setAttr('type', 'stage');
   }
 
+  moveUp() {
+    const tr = this.layer.find("Transformer");
+    try {
+      tr[0]._nodes[0].moveUp();
+    } catch (err) { }
+  }
+
+  moveDown() {
+    const tr = this.layer.find("Transformer");
+    try {
+      tr[0]._nodes[0].moveDown();
+    } catch (err) { }
+  }
+
   setupTransformer() {
     this.transform = new this.core.Transformer({
       shouldOverdrawWholeArea: true,
