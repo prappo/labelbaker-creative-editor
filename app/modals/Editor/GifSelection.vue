@@ -46,16 +46,16 @@
                 </h3>
               </div>
               <!-- Modal body -->
-              <div class="p-6 grid grid-cols-3 gap-2">
+              <div class="p-6 grid grid-cols-6 gap-2">
                 <div
                   v-for="gif in gifs"
                   :key="gif.name"
                   class="flex justify-center items-center"
                 >
                   <img
-                    :src="`${gif.src}`"
+                    :src="`${gif.preview}`"
                     alt="gif"
-                    class="w-full h-full object-cover"
+                    class="w-12 h-12 object-cover cursor-pointer"
                     @click="selectGif(gif.src)"
                   />
                 </div>
@@ -88,53 +88,144 @@ export default {
     
         {
           name: "pointing-1",
-          src: "gifs/pointing/pointing-1.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-1.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-1.gif",
+          category: "pointing",
         },
         {
           name: "pointing-2",
-          src: "gifs/pointing/pointing-2.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-2.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-2.gif",
+          category: "pointing",
         },
         {
           name: "pointing-3",
-          src: "gifs/pointing/pointing-3.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-3.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-3.gif",
+          category: "pointing",
         },
         {
           name: "pointing-4",
-          src: "gifs/pointing/pointing-4.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-4.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-4.gif",
+          category: "pointing",
         },
         {
           name: "pointing-5",
-          src: "gifs/pointing/pointing-5.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-5.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-5.gif",
+          category: "pointing",
         },
         {
           name: "pointing-6",
-          src: "gifs/pointing/pointing-6.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-6.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-6.gif",
+          category: "pointing",
         },
         {
           name: "pointing-7",
-          src: "gifs/pointing/pointing-7.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-7.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-7.gif",
+          category: "pointing",
         },
         {
           name: "pointing-8",
-          src: "gifs/pointing/pointing-8.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-8.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-8.gif",
+          category: "pointing",
         },
         {
           name: "pointing-9",
-          src: "gifs/pointing/pointing-9.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-9.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-9.gif",
+          category: "pointing",
         },
-        {
+          {
           name: "pointing-10",
-          src: "gifs/pointing/pointing-10.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-10.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-10.gif",
+          category: "pointing",
         },
        
         {
           name: "pointing-12",
-          src: "gifs/pointing/pointing-12.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-12.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-12.gif",
+          category: "pointing",
         },
         {
           name: "pointing-13",
-          src: "gifs/pointing/pointing-13.gif",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-13.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-13.gif",
+          category: "pointing",
         },
+        {
+          name: "pointing-14",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-14.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-14.gif",
+          category: "pointing",
+        },
+        {
+          name: "pointing-15",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-15.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-15.gif",
+          category: "pointing",
+        },
+        {
+          name: "pointing-16",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-16.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-16.gif",
+          category: "pointing",
+        },
+        {
+          name: "pointing-17",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-17.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-17.gif",
+          category: "pointing",
+        },
+        {
+          name: "pointing-18",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-18.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-18.gif",
+          category: "pointing",
+        },
+        {
+          name: "pointing-19",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-19.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-19.gif",
+          category: "pointing",
+        },
+        {
+          name: "pointing-20",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-20.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-20.gif",
+          category: "pointing",
+        },
+        {
+          name: "pointing-21",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-21.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-21.gif",
+          category: "pointing",
+        },
+        {
+          name: "pointing-22",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-22.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-22.gif",
+          category: "pointing",
+        }  ,
+        {
+          name: "pointing-23",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs/pointing/pointing-23.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/pointing/pointing-23.gif",
+          category: "pointing",
+        }  ,
+        {
+          name: "random-1",
+          src: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/random/random-1.gif",
+          preview: "https://raw.githubusercontent.com/Labelbaker/assets/refs/heads/main/static/gifs-preview/random/random-1.gif",
+          category: "random",
+        }  ,
+      
       ],
     };
   },
