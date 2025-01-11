@@ -1,102 +1,222 @@
 <template>
   <div>
-    <vue-final-modal v-model="stats.showPreviewModal" style="z-index: 9999999" classes="modal-container"
-      content-class="modal-content" @keydown.esc="closeModal">
-      <div style="height: 100vh" class="flex justify-center items-center h-full w-full">
+    <vue-final-modal
+      v-model="stats.showPreviewModal"
+      style="z-index: 9999999"
+      classes="modal-container"
+      content-class="modal-content"
+      @keydown.esc="closeModal"
+    >
+      <div
+        style="height: 100vh"
+        class="flex justify-center items-center h-full w-full"
+      >
         <div class="w-full flex justify-center">
           <div class="relative w-full h-full max-w-7xl">
             <!-- Modal content -->
-            <div class="relative w-full bg-white rounded-lg shadow dark:bg-gray-700">
-              <button type="button" @click="closeModal"
-                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white">
-                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
+            <div
+              class="relative w-full bg-white rounded-lg shadow dark:bg-gray-700"
+            >
+              <button
+                type="button"
+                @click="closeModal"
+                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"></path>
+                    clip-rule="evenodd"
+                  ></path>
                 </svg>
                 <span class="sr-only">Close modal</span>
               </button>
               <!-- Modal header -->
-              <div class="px-6 py-3 border-b rounded-t dark:border-gray-600">
-                <h3 v-if="showHeaderOptions"
-                  class="text-base font-semibold text-gray-900 lg:text-xl dark:text-white flex items-center justify-center gap-3">
-                  <button type="button"
-                    class="px-3 flex gap-2 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    @click="replay">
-                    <ArrowPathIcon class="w-4" />
-                    ReRender
-                  </button>
-                  <!-- render button -->
-
-                  <button @click="exportAsVideo" type="button"
-                    class="px-3 relative flex gap-2 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <VideoCameraIcon class="w-4" />
-                    Export as Video
-                    <div v-if="appMode === 'noAuth' && isPro('yes')"
-                      style="position: absolute; top: -15px; right: -20px;">
-                      <IsProTag />
+              <div class="px-6 py-4 border-b rounded-t dark:border-gray-600">
+                <h3
+                  v-if="showHeaderOptions"
+                  class="text-base font-semibold text-gray-900 lg:text-xl dark:text-white"
+                >
+                  <!-- Main controls container -->
+                  <div class="flex items-center justify-between">
+                    <!-- Left side controls -->
+                    <div class="flex items-center gap-2">
+                      <button
+                        type="button"
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 dark:bg-gray-700 dark:text-gray-200"
+                        @click="replay"
+                      >
+                        <ArrowPathIcon class="w-4 h-4 mr-1 inline-block" />
+                        Replay
+                      </button>
                     </div>
-                  </button>
-                  <div v-if="exportSettings" class="flex bg-gray-200 px-4 py-1 rounded-full items-center gap-3">
-                    <ClockIcon class="w-4" />
-                    <input min="1" v-model="duration" class="w-28 rounded-full h-7" placeholder="Duration"
-                      type="number" />
-                    Sec
-                    <button @click="render" type="button"
-                      class="px-3 flex gap-2 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                      <FilmIcon class="w-4" />
-                      Render
-                    </button>
 
+                    <!-- Right side export controls -->
+                    <div class="flex items-center gap-3">
+                      <!-- Export options when not rendering -->
+                      <div v-if="!exportSettings" class="flex items-center gap-2">
+                        <button
+                          @click="exportAsVideo"
+                          type="button"
+                          class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-300 flex items-center gap-2"
+                        >
+                          <VideoCameraIcon class="w-4 h-4" />
+                          Export Video
+                          <div
+                            v-if="appMode === 'noAuth' && isPro('yes')"
+                            class="absolute -top-2 -right-2"
+                          >
+                            <IsProTag />
+                          </div>
+                        </button>
 
-                    <button @click="exportSettings = false" type="button"
-                      class="flex gap-2  text-xs text-red-600 font-medium text-center">
-                      <XCircleIcon class="w-5" />
+                        <button
+                          @click="exportAsGif"
+                          type="button"
+                          class="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg hover:bg-purple-700 focus:ring-2 focus:ring-purple-300 flex items-center gap-2"
+                        >
+                          <GifIcon class="w-4 h-4" />
+                          Export GIF
+                          <div
+                            v-if="appMode === 'noAuth' && isPro('yes')"
+                            class="absolute -top-2 -right-2"
+                          >
+                            <IsProTag />
+                          </div>
+                        </button>
+                      </div>
 
-                    </button>
+                      <!-- Export settings when rendering -->
+                      <div
+                        v-if="exportSettings"
+                        class="flex items-center gap-3 bg-gray-50 dark:bg-gray-800 px-4 py-2 rounded-lg"
+                      >
+                        <!-- Duration input - only show for video -->
+                        <div v-if="downloadType === 'video'" class="flex items-center gap-2">
+                          <ClockIcon class="w-4 h-4 text-gray-500" />
+                          <input
+                            min="1"
+                            v-model="duration"
+                            class="w-20 px-2 py-1 text-sm border rounded-lg focus:ring-2 focus:ring-blue-300"
+                            placeholder="Duration"
+                            type="number"
+                          />
+                          <span class="text-sm text-gray-600 dark:text-gray-300">sec</span>
+                        </div>
+
+                        <!-- Quality selector (only for GIF) -->
+                        <div v-if="downloadType === 'GIF'" class="flex items-center gap-2">
+                          <select 
+                            v-model="gifQuality" 
+                            class="px-2 py-1 text-sm border rounded-lg focus:ring-2 focus:ring-blue-300 bg-white dark:bg-gray-700"
+                          >
+                            <option value="high">High Quality</option>
+                            <option value="medium">Medium Quality</option>
+                            <option value="low">Low Quality</option>
+                          </select>
+                        </div>
+
+                        <!-- Action buttons -->
+                        <div class="flex items-center gap-2">
+                          <button
+                            @click="render"
+                            type="button"
+                            class="px-4 py-1 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-300 flex items-center gap-2"
+                          >
+                            <FilmIcon class="w-4 h-4" />
+                            Start Export
+                          </button>
+
+                          <button
+                            @click="exportSettings = false"
+                            type="button"
+                            class="p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                          >
+                            <XCircleIcon class="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </h3>
-                <div v-else class="h-8 flex items-center justify-center font-semibold w-full">
+                <div
+                  v-else
+                  class="h-8 flex items-center justify-center font-semibold w-full"
+                >
                   Preview
                 </div>
               </div>
               <!-- Modal body -->
               <div class="w-full">
-
-
                 <div
-                  class="md:w-full relative md:block overflow-auto bg-white  top-0 w-full dark:bg-gray-500 items-center justify-center">
-
+                  class="md:w-full relative md:block overflow-auto bg-white top-0 w-full dark:bg-gray-500 items-center justify-center"
+                >
                   <!-- rendaring overlay -->
-                  <div v-if="rendering"
-                    class="absolute bg-blue-400 bg-opacity-30 w-full h-full top-0 flex justify-center z-10 items-center">
-                    <div class="bg-blue-500 font-semibold text-white px-3 py-1 rounded-full flex items-center">
-                      <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                        </path>
+                  <div
+                    v-if="rendering"
+                    class="absolute bg-blue-400 bg-opacity-30 w-full h-full top-0 flex flex-col gap-3 justify-center z-10 items-center"
+                  >
+                    <div
+                      class="bg-blue-500 font-semibold text-white px-5 py-2 rounded-full flex items-center"
+                    >
+                      <svg
+                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          class="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          stroke-width="4"
+                        ></circle>
+                        <path
+                          class="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
-                      Rendering...
+                      {{ renderingStatus }}
+                    </div>
+                    <div v-if="renderProgress > 0" class="bg-blue-500 px-5 py-2 rounded-full text-white">
+                      {{ Math.round(renderProgress * 100) }}% Complete
                     </div>
                   </div>
 
                   <!-- download overlay -->
-                  <div v-if="downloadLink"
-                    class="absolute bg-green-400 gap-5 bg-opacity-80 w-full h-full top-0 flex flex-col justify-center z-10 items-center">
-                    <div class="text-xl text-white bg-green-500 px-5 py-1 rounded-full shadow font-semibold">
-                      Your video is ready to download
+                  <div
+                    v-if="downloadLink"
+                    class="absolute bg-green-400 gap-5 bg-opacity-80 w-full h-full top-0 flex flex-col justify-center z-10 items-center"
+                  >
+                    <div
+                      class="text-xl text-white bg-green-500 px-5 py-1 rounded-full shadow font-semibold"
+                    >
+                      Your {{ downloadType }} is ready to download
                     </div>
-                    <div class=" px-3 py-1 rounded-full flex gap-5 items-center">
-                      <a :href="downloadLink" :download="'video.mp4'" v-if="downloadLink"
-                        class="px-3 flex gap-2 py-2 text-xs font-medium text-center text-white bg-green-700 rounded-full hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    <div class="px-3 py-1 rounded-full flex gap-5 items-center">
+                      <a
+                        :href="downloadLink"
+                        :download="downloadType === 'video' ? 'video.mp4' : 'animation.gif'"
+                        v-if="downloadLink"
+                        class="px-3 flex gap-2 py-2 text-xs font-medium text-center text-white bg-green-700 rounded-full hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                      >
                         <CloudArrowDownIcon class="w-4" />
-                        Download Video
+                        Download {{ downloadType }}
                       </a>
-                      <button @click="downloadLink = null" type="button"
-                        class="px-3 flex gap-2 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-full hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                      <button
+                        @click="downloadLink = null"
+                        type="button"
+                        class="px-3 flex gap-2 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-full hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                      >
                         <XCircleIcon class="w-4" />
                         Close
                       </button>
@@ -105,12 +225,14 @@
 
                   <!-- Previw -->
 
-                  <div style="height: 80vh" class="w-full h-full" id="previewStage">
+                  <div
+                    style="height: 80vh"
+                    class="w-full h-full"
+                    id="previewStage"
+                  >
                     <div class="flex justify-center" id="previewCanvas"></div>
                   </div>
                 </div>
-
-
               </div>
             </div>
           </div>
@@ -125,8 +247,10 @@ import { defineAsyncComponent } from "vue";
 import { $vfm, VueFinalModal, ModalsContainer } from "vue-final-modal";
 import { Editor } from "../../src/editor";
 import { stats } from "../store/stats";
-import { TempData } from "../store/temp"
+import { TempData } from "../store/temp";
 import { canvasContainer } from "../store/editor";
+
+import '../../public/gif.js';
 const IsProTag = defineAsyncComponent(() =>
   import("../components/Tags/IsPro.vue")
 );
@@ -136,6 +260,7 @@ import {
   CloudArrowDownIcon,
   FilmIcon,
   XCircleIcon,
+  GifIcon,
 } from "@heroicons/vue/24/outline";
 import { VideoCameraIcon } from "@heroicons/vue/24/solid";
 export default {
@@ -149,10 +274,12 @@ export default {
     FilmIcon,
     XCircleIcon,
     CloudArrowDownIcon,
+    GifIcon,
   },
   data() {
     return {
-      stats, TempData,
+      stats,
+      TempData,
       selected: {
         props: null,
       },
@@ -163,32 +290,45 @@ export default {
       downloadLink: null,
       rendering: false,
       showHeaderOptions: false,
+      downloadType: 'video',
+      gifQuality: 'high',
+      renderingStatus: '',
+      renderProgress: 0,
     };
   },
   methods: {
     exportAsVideo() {
-      if (this.appMode === 'noAuth' && this.isPro('yes')) {
-        return alert('Pro version required');
+      if (this.appMode === "noAuth" && this.isPro("yes")) {
+        return alert("Pro version required");
       }
+      this.downloadType = 'video';
       this.exportSettings = true;
     },
     exportVid(blob) {
-      const filename = 'video.mp4';
+      const filename = "video.mp4";
       this.downloadLink = URL.createObjectURL(blob);
-      
+
       // Update the download link to use .mp4 extension
       const downloadLink = document.querySelector('a[download="myvideo.webm"]');
       if (downloadLink) {
-        downloadLink.setAttribute('download', filename);
+        downloadLink.setAttribute("download", filename);
       }
     },
     render() {
-      // Check for MP4 support first
+      if (this.downloadType === 'GIF') {
+        this.renderGif();
+      } else {
+        // Existing video render code
+        this.renderVideo();
+      }
+    },
+    // Rename existing render method to renderVideo
+    renderVideo() {
       const mimeTypes = [
-        'video/mp4;codecs=h264,aac',
-        'video/mp4',
-        'video/webm;codecs=h264,opus',
-        'video/webm;codecs=vp8,opus'
+        "video/mp4;codecs=h264,aac",
+        "video/mp4",
+        "video/webm;codecs=h264,opus",
+        "video/webm;codecs=vp8,opus",
       ];
 
       let selectedMimeType = null;
@@ -200,16 +340,18 @@ export default {
       }
 
       if (!selectedMimeType) {
-        alert('Your browser does not support video recording');
+        alert("Your browser does not support video recording");
         return;
       }
 
       this.downloadLink = null;
       this.rendering = true;
-      
+      this.renderingStatus = 'Preparing video capture...';
+      this.renderProgress = 0;
+
       this.applyOnCanvas()
         .then((e) => {
-          const chunks = []; 
+          const chunks = [];
           const canvas = this.editor.layer.getNativeCanvasElement();
           const stream = canvas.captureStream(30);
           const rec = new MediaRecorder(stream, {
@@ -220,25 +362,36 @@ export default {
           // Audio handling
           const audioCtx = new AudioContext();
           const dest = audioCtx.createMediaStreamDestination();
-          
+
           if (this.editor.medias && this.editor.medias.length > 0) {
             try {
-              this.editor.medias.forEach(media => {
+              this.renderingStatus = 'Setting up audio...';
+              this.editor.medias.forEach((media) => {
                 if (media && !media.paused) {
                   const sourceNode = audioCtx.createMediaElementSource(media);
                   sourceNode.connect(dest);
                   sourceNode.connect(audioCtx.destination);
                 }
               });
-              
+
               const audioTrack = dest.stream.getAudioTracks()[0];
               if (audioTrack) {
                 stream.addTrack(audioTrack);
               }
             } catch (err) {
-              console.warn('Audio setup failed:', err);
+              console.warn("Audio setup failed:", err);
             }
           }
+
+          let startTime = Date.now();
+          const totalDuration = this.duration * 1000;
+
+          // Update progress every 100ms
+          const progressInterval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            this.renderProgress = Math.min(elapsed / totalDuration, 0.99);
+            this.renderingStatus = `Recording video... ${Math.round(this.renderProgress * 100)}%`;
+          }, 100);
 
           rec.ondataavailable = (e) => {
             if (e.data && e.data.size > 0) {
@@ -247,49 +400,199 @@ export default {
           };
 
           rec.onstop = () => {
+            clearInterval(progressInterval);
             if (chunks.length > 0) {
-              const blob = new Blob(chunks, { type: selectedMimeType.split(';')[0] });
-              // Change the download filename to .mp4
+              this.renderingStatus = 'Finalizing video...';
+              this.renderProgress = 1;
+              
+              const blob = new Blob(chunks, {
+                type: selectedMimeType.split(";")[0],
+              });
               this.exportVid(blob);
             } else {
               this.rendering = false;
-              console.error('No data was recorded');
+              this.renderingStatus = '';
+              this.renderProgress = 0;
+              console.error("No data was recorded");
             }
           };
 
           rec.onerror = (err) => {
+            clearInterval(progressInterval);
             this.rendering = false;
-            console.error('Recording error:', err);
+            this.renderingStatus = '';
+            this.renderProgress = 0;
+            console.error("Recording error:", err);
           };
 
+          this.renderingStatus = 'Starting video capture...';
           rec.start(100);
-          
+
           setTimeout(() => {
             rec.stop();
             this.rendering = false;
+            this.renderingStatus = '';
+            this.renderProgress = 0;
           }, this.duration * 1000);
         })
         .catch((err) => {
           this.rendering = false;
-          console.error('Canvas setup failed:', err);
+          this.renderingStatus = '';
+          this.renderProgress = 0;
+          console.error("Canvas setup failed:", err);
         });
     },
-    closeModal() {
+    renderGif() {
+      this.rendering = true;
+      this.renderingStatus = 'Preparing to capture frames...';
+      this.renderProgress = 0;
 
+      // Reset animation state first
+      this.replay();
+
+      // Wait a bit for the animation to start
+      setTimeout(() => {
+        try {
+          const tempCanvas = document.createElement('canvas');
+          const tempCtx = tempCanvas.getContext('2d', {
+            willReadFrequently: true,
+            alpha: true
+          });
+          
+          const sourceCanvas = this.editor.layer.getNativeCanvasElement();
+          const actualWidth = sourceCanvas.width;
+          const actualHeight = sourceCanvas.height;
+          
+          tempCanvas.width = actualWidth;
+          tempCanvas.height = actualHeight;
+
+          const gifOptions = {
+            workers: 8,
+            width: actualWidth,
+            height: actualHeight,
+            workerScript: '/gif.worker.js',
+            debug: true,
+            repeat: 0,
+            transparent: 'rgba(0,0,0,0)',
+            background: null
+          };
+
+          // Quality-specific settings
+          switch(this.gifQuality) {
+            case 'high':
+              Object.assign(gifOptions, {
+                quality: 1,
+                dither: false,
+                sample: 1,
+                preserveColors: true,
+              });
+              break;
+            case 'medium':
+              Object.assign(gifOptions, {
+                quality: 5,
+                dither: 'FloydSteinberg',
+                sample: 2,
+                preserveColors: true,
+              });
+              break;
+            case 'low':
+              Object.assign(gifOptions, {
+                quality: 10,
+                dither: 'FloydSteinberg',
+                sample: 3,
+                preserveColors: true,
+              });
+              break;
+          }
+
+          const gif = new GIF(gifOptions);
+
+          const fps = 30;  // Standard FPS
+          const duration = 5;  // 5 seconds duration
+          const totalFrames = duration * fps;  // Total frames for 5 seconds
+          const frameDelay = 1000 / fps;  // Frame delay in ms
+          
+          let frameCount = 0;
+          let startTime = Date.now();
+
+          // Reset the animation
+          if (this.editor.resetAnimation) {
+            this.editor.resetAnimation();
+          }
+
+          const captureFrame = () => {
+            if (!this.rendering) return;
+            
+            if (frameCount >= totalFrames) {
+              this.renderingStatus = 'Generating GIF...';
+              gif.render();
+              return;
+            }
+
+            // Calculate current animation time
+            const currentTime = (frameCount / fps);
+            
+            // Update animation if possible
+            if (this.editor.setAnimationProgress) {
+              this.editor.setAnimationProgress(currentTime);
+            }
+
+            // Capture frame
+            tempCtx.clearRect(0, 0, actualWidth, actualHeight);
+            tempCtx.drawImage(sourceCanvas, 0, 0);
+
+            gif.addFrame(tempCanvas, {
+              delay: frameDelay,
+              copy: true,
+              dispose: 1
+            });
+
+            frameCount++;
+            this.renderProgress = frameCount / totalFrames * 0.5;
+            this.renderingStatus = `Capturing frame ${frameCount}/${totalFrames}`;
+            
+            // Continue capturing frames
+            requestAnimationFrame(captureFrame);
+          };
+
+          gif.on('progress', (p) => {
+            this.renderProgress = 0.5 + (p * 0.5);
+            this.renderingStatus = 'Generating GIF...';
+          });
+
+          gif.on('finished', (blob) => {
+            console.log('GIF generation finished');
+            this.rendering = false;
+            this.renderingStatus = '';
+            this.renderProgress = 0;
+            this.downloadLink = URL.createObjectURL(blob);
+            this.downloadType = 'GIF';
+          });
+
+          // Start capturing frames
+          requestAnimationFrame(captureFrame);
+
+        } catch (err) {
+          console.error('GIF initialization error:', err);
+          this.rendering = false;
+          this.renderingStatus = '';
+          this.renderProgress = 0;
+          alert('Failed to initialize GIF encoder. Please try again.');
+        }
+      }, 1000);
+    },
+    closeModal() {
       this.editor.clearIntervals();
       stats.showPreviewModal = false;
       this.editor.clearAll();
       this.editor = null;
-      document.getElementById('previewCanvas').innerHTML = '';
-
+      document.getElementById("previewCanvas").innerHTML = "";
     },
     replay() {
       this.applyOnCanvas();
     },
     applyOnCanvas() {
-
       return new Promise((resolve, reject) => {
-
         const config = {
           width: parseInt(this.selected.props.cellWidth),
           height: parseInt(this.selected.props.cellHeight),
@@ -303,7 +606,7 @@ export default {
 
         if (this.editor) {
           this.editor.clearIntervals();
-          document.getElementById('previewCanvas').innerHTML = '';
+          document.getElementById("previewCanvas").innerHTML = "";
           this.editor.clearAll();
         }
 
@@ -315,11 +618,11 @@ export default {
 
         try {
           editor.fitIntoContainer();
-        } catch (e) { }
+        } catch (e) {}
         window.addEventListener("resize", function () {
           try {
             editor.fitIntoContainer();
-          } catch (e) { }
+          } catch (e) {}
         });
 
         let data = this.canvasContainer.editor.editor;
@@ -343,17 +646,32 @@ export default {
           }, 100);
 
           editor.fitIntoContainer();
-        } catch (e) { reject() }
-
+        } catch (e) {
+          reject();
+        }
       });
+    },
+    exportAsGif() {
+      this.downloadType = 'GIF';
+      this.exportSettings = true;
     },
   },
   mounted() {
+    fetch('/gif.worker.js')
+      .then(response => {
+        if (!response.ok) {
+          console.error('gif.worker.js not found in public directory');
+        }
+      })
+      .catch(err => {
+        console.error('Failed to check gif.worker.js:', err);
+      });
+
     setTimeout(() => {
-      if (!TempData.templateType.includes('banner')) {
+      if (!TempData.templateType.includes("banner")) {
         this.showHeaderOptions = true;
       }
-    }, 200)
+    }, 200);
     this.selected.props = this.canvasContainer;
 
     this.applyOnCanvas()

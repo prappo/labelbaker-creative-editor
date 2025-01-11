@@ -63,6 +63,7 @@
     "fontfaceobserver": "^2.3.0",
     "fuse.js": "^6.6.2",
     "get-svg-colors-browser": "^2.0.7",
+    "gif.js.optimized": "^1.0.1",
     "highlight.js": "^11.7.0",
     "jsbarcode": "^3.11.5",
     "jspdf": "^2.5.2",
