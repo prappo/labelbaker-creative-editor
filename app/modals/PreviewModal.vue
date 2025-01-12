@@ -446,6 +446,16 @@ export default {
       this.rendering = true;
       this.renderingStatus = 'Preparing to capture frames...';
       this.renderProgress = 0;
+      
+      // Create a cleanup function
+      const cleanup = () => {
+        this.rendering = false;
+        this.renderingStatus = '';
+        this.renderProgress = 0;
+        if (this.editor && this.editor.resetAnimation) {
+          this.editor.resetAnimation();
+        }
+      };
 
       // Reset animation state first
       this.replay();
@@ -453,131 +463,138 @@ export default {
       // Wait a bit for the animation to start
       setTimeout(() => {
         try {
+          const sourceCanvas = this.editor.layer.getNativeCanvasElement();
+          if (!sourceCanvas) {
+            throw new Error('Source canvas not found');
+          }
+
           const tempCanvas = document.createElement('canvas');
           const tempCtx = tempCanvas.getContext('2d', {
             willReadFrequently: true,
             alpha: true
           });
           
-          const sourceCanvas = this.editor.layer.getNativeCanvasElement();
           const actualWidth = sourceCanvas.width;
           const actualHeight = sourceCanvas.height;
           
+          // Validate dimensions
+          if (actualWidth <= 0 || actualHeight <= 0) {
+            throw new Error('Invalid canvas dimensions');
+          }
+
           tempCanvas.width = actualWidth;
           tempCanvas.height = actualHeight;
 
-          const gifOptions = {
-            workers: 8,
+          // Set quality-dependent settings
+          const qualitySettings = {
+            high: {
+              quality: 1,
+              dither: false,
+              sample: 1,
+              fps: 30
+            },
+            medium: {
+              quality: 5,
+              dither: 'FloydSteinberg',
+              sample: 2,
+              fps: 20
+            },
+            low: {
+              quality: 10,
+              dither: 'FloydSteinberg',
+              sample: 3,
+              fps: 15
+            }
+          };
+
+          const settings = qualitySettings[this.gifQuality];
+          const fps = settings.fps;
+          const duration = 5; // 5 seconds duration
+          const totalFrames = duration * fps;
+          const frameDelay = 1000 / fps;
+
+          const gif = new GIF({
+            workers: 4, // Reduced from 8 to prevent memory issues
             width: actualWidth,
             height: actualHeight,
             workerScript: '/gif.worker.js',
-            debug: true,
+            quality: settings.quality,
+            dither: settings.dither,
+            sample: settings.sample,
             repeat: 0,
             transparent: 'rgba(0,0,0,0)',
-            background: null
-          };
+            background: null,
+            debug: true
+          });
 
-          // Quality-specific settings
-          switch(this.gifQuality) {
-            case 'high':
-              Object.assign(gifOptions, {
-                quality: 1,
-                dither: false,
-                sample: 1,
-                preserveColors: true,
-              });
-              break;
-            case 'medium':
-              Object.assign(gifOptions, {
-                quality: 5,
-                dither: 'FloydSteinberg',
-                sample: 2,
-                preserveColors: true,
-              });
-              break;
-            case 'low':
-              Object.assign(gifOptions, {
-                quality: 10,
-                dither: 'FloydSteinberg',
-                sample: 3,
-                preserveColors: true,
-              });
-              break;
-          }
-
-          const gif = new GIF(gifOptions);
-
-          const fps = 30;  // Standard FPS
-          const duration = 5;  // 5 seconds duration
-          const totalFrames = duration * fps;  // Total frames for 5 seconds
-          const frameDelay = 1000 / fps;  // Frame delay in ms
-          
           let frameCount = 0;
-          let startTime = Date.now();
+          let isRendering = true;
 
-          // Reset the animation
-          if (this.editor.resetAnimation) {
-            this.editor.resetAnimation();
-          }
+          // Add error handler for GIF encoder
+          gif.on('abort', (err) => {
+            console.error('GIF encoding aborted:', err);
+            cleanup();
+            alert('GIF generation failed. Please try again with lower quality settings.');
+          });
 
           const captureFrame = () => {
-            if (!this.rendering) return;
-            
-            if (frameCount >= totalFrames) {
+            if (!isRendering || frameCount >= totalFrames) {
               this.renderingStatus = 'Generating GIF...';
               gif.render();
               return;
             }
 
-            // Calculate current animation time
-            const currentTime = (frameCount / fps);
-            
-            // Update animation if possible
-            if (this.editor.setAnimationProgress) {
-              this.editor.setAnimationProgress(currentTime);
+            try {
+              // Calculate current animation time
+              const currentTime = (frameCount / fps);
+              
+              // Update animation if possible
+              if (this.editor.setAnimationProgress) {
+                this.editor.setAnimationProgress(currentTime);
+              }
+
+              // Capture frame
+              tempCtx.clearRect(0, 0, actualWidth, actualHeight);
+              tempCtx.drawImage(sourceCanvas, 0, 0);
+
+              gif.addFrame(tempCanvas, {
+                delay: frameDelay,
+                copy: true,
+                dispose: 1
+              });
+
+              frameCount++;
+              this.renderProgress = frameCount / totalFrames * 0.5;
+              this.renderingStatus = `Capturing frame ${frameCount}/${totalFrames}`;
+              
+              // Use setTimeout instead of requestAnimationFrame for more controlled timing
+              setTimeout(captureFrame, frameDelay);
+            } catch (err) {
+              console.error('Frame capture error:', err);
+              isRendering = false;
+              cleanup();
+              alert('Error during frame capture. Please try again.');
             }
-
-            // Capture frame
-            tempCtx.clearRect(0, 0, actualWidth, actualHeight);
-            tempCtx.drawImage(sourceCanvas, 0, 0);
-
-            gif.addFrame(tempCanvas, {
-              delay: frameDelay,
-              copy: true,
-              dispose: 1
-            });
-
-            frameCount++;
-            this.renderProgress = frameCount / totalFrames * 0.5;
-            this.renderingStatus = `Capturing frame ${frameCount}/${totalFrames}`;
-            
-            // Continue capturing frames
-            requestAnimationFrame(captureFrame);
           };
 
           gif.on('progress', (p) => {
             this.renderProgress = 0.5 + (p * 0.5);
-            this.renderingStatus = 'Generating GIF...';
+            this.renderingStatus = `Encoding GIF: ${Math.round(p * 100)}%`;
           });
 
           gif.on('finished', (blob) => {
-            console.log('GIF generation finished');
-            this.rendering = false;
-            this.renderingStatus = '';
-            this.renderProgress = 0;
             this.downloadLink = URL.createObjectURL(blob);
             this.downloadType = 'GIF';
+            cleanup();
           });
 
           // Start capturing frames
-          requestAnimationFrame(captureFrame);
+          captureFrame();
 
         } catch (err) {
           console.error('GIF initialization error:', err);
-          this.rendering = false;
-          this.renderingStatus = '';
-          this.renderProgress = 0;
-          alert('Failed to initialize GIF encoder. Please try again.');
+          cleanup();
+          alert('Failed to initialize GIF encoder. Please try again with lower quality settings.');
         }
       }, 1000);
     },
