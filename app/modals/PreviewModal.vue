@@ -250,7 +250,7 @@ import { stats } from "../store/stats";
 import { TempData } from "../store/temp";
 import { canvasContainer } from "../store/editor";
 
-import '../../public/gif.js';
+import 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js';
 const IsProTag = defineAsyncComponent(() =>
   import("../components/Tags/IsPro.vue")
 );
@@ -657,7 +657,7 @@ export default {
     },
   },
   mounted() {
-    fetch('/gif.worker.js')
+    fetch('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js')
       .then(response => {
         if (!response.ok) {
           console.error('gif.worker.js not found in public directory');
