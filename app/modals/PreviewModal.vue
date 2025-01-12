@@ -442,10 +442,33 @@ export default {
           console.error("Canvas setup failed:", err);
         });
     },
-    renderGif() {
+    async loadGifWorker() {
+      try {
+        const response = await fetch('/gif.worker.js');
+        if (!response.ok) {
+          throw new Error('Failed to load GIF worker script');
+        }
+        return true;
+      } catch (err) {
+        console.error('Error loading GIF worker:', err);
+        return false;
+      }
+    },
+    async renderGif() {
       this.rendering = true;
-      this.renderingStatus = 'Preparing to capture frames...';
+      this.renderingStatus = 'Loading GIF encoder...';
       this.renderProgress = 0;
+
+      // Check if worker is available first
+      const workerLoaded = await this.loadGifWorker();
+      if (!workerLoaded) {
+        this.rendering = false;
+        this.renderingStatus = '';
+        alert('Failed to load GIF encoder. Please refresh the page and try again.');
+        return;
+      }
+
+      this.renderingStatus = 'Preparing to capture frames...';
       
       // Create a cleanup function
       const cleanup = () => {
@@ -512,6 +535,7 @@ export default {
           const duration = 5; // 5 seconds duration
           const totalFrames = duration * fps;
           const frameDelay = 1000 / fps;
+          
 
           const gif = new GIF({
             workers: 4, // Reduced from 8 to prevent memory issues
@@ -674,6 +698,13 @@ export default {
     },
   },
   mounted() {
+    // Preload the GIF worker script
+    this.loadGifWorker().then(loaded => {
+      if (!loaded) {
+        console.error('Failed to preload GIF worker script');
+      }
+    });
+
     fetch('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js')
       .then(response => {
         if (!response.ok) {
