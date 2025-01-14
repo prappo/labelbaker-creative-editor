@@ -444,7 +444,7 @@ export default {
     },
     async loadGifWorker() {
       try {
-        const response = await fetch('/gif.worker.js');
+        const response = await fetch('gif.worker.js');
         if (!response.ok) {
           throw new Error('Failed to load GIF worker script');
         }
@@ -520,13 +520,13 @@ export default {
               quality: 5,
               dither: 'FloydSteinberg',
               sample: 2,
-              fps: 20
+              fps: 30
             },
             low: {
               quality: 10,
               dither: 'FloydSteinberg',
               sample: 3,
-              fps: 15
+              fps: 30
             }
           };
 
@@ -541,7 +541,7 @@ export default {
             workers: 4, // Reduced from 8 to prevent memory issues
             width: actualWidth,
             height: actualHeight,
-            workerScript: '/gif.worker.js',
+            workerScript: 'gif.worker.js',
             quality: settings.quality,
             dither: settings.dither,
             sample: settings.sample,
@@ -705,7 +705,7 @@ export default {
       }
     });
 
-    fetch('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js')
+    fetch('gif.worker.js')
       .then(response => {
         if (!response.ok) {
           console.error('gif.worker.js not found in public directory');
